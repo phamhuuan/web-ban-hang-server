@@ -6,6 +6,7 @@ const cart = {
 		const {userId, name, value, image} = req.body;
 		Cart.findOne({userId, name}, (error, result) => {
 			if (error) {
+				res.status(444);
 				res.json({error});
 				return;
 			}
@@ -24,10 +25,24 @@ const cart = {
 					res.status(201);
 					res.json({message: 'Add to cart success', result});
 				}).catch((error) => {
+					res.status(444);
 					res.json({error});
 					return;
 				});
 			}
+		});
+	},
+	getCart: (req, res) => {
+		const {userId} = req.body;
+		Cart.find({userId}, (error, result) => {
+			if (error) {
+				res.status(444);
+				res.json({error});
+				return;
+			}
+			res.status(200);
+			res.json({result});
+			return;
 		});
 	},
 };
