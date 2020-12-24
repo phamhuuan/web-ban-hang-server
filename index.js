@@ -36,5 +36,4 @@ app.all('/*', function(req, res, next) {
 });
 
 app.use(require('./routes'));
-app.get('/', (req, res) => {res.send('Hello')});
 app.listen(process.env.PORT || 4000);

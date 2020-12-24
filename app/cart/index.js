@@ -45,6 +45,9 @@ const cart = {
 			return;
 		});
 	},
+	removeFromCart: (req, res) => {
+		const {} = req.params;
+	},
 };
 
 module.exports = cart;
