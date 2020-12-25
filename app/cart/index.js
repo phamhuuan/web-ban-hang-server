@@ -54,6 +54,26 @@ const cart = {
 			return;
 		});
 	},
+	updateAmount: (req, res) => {
+		const {id, cartId, amount} = req.body;
+		Cart.findOne({_id: cartId, userId: id}, (error, result) => {
+			if (error) {
+				res.status(444);
+				res.json({error});
+				return;
+			}
+			result.amount = amount;
+			result.save().then((saveResult) => {
+				res.json({result: saveResult});
+				return;
+			}).catch((saveError) => {
+				res.status(444);
+				res.json({error: saveError});
+				return;
+			});
+			return;
+		});
+	},
 };
 
 module.exports = cart;
