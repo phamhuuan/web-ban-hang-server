@@ -54,6 +54,18 @@ const cart = {
 			return;
 		});
 	},
+	removeAllFromCart: (req, res) => {
+		const {id} = req.params;
+		Cart.deleteMany({userId: id}, (error, result) => {
+			if (error) {
+				res.status(444);
+				res.json({error});
+				return;
+			}
+			res.json({message: 'Delete success'});
+			return;
+		});
+	},
 	updateAmount: (req, res) => {
 		const {id, cartId, amount} = req.body;
 		Cart.findOne({_id: cartId, userId: id}, (error, result) => {
