@@ -3,7 +3,7 @@ const Cart = mongoose.model('Cart');
 
 const cart = {
 	addToCart: (req, res) => {
-		const {userId, name, value, image} = req.body;
+		const {userId, name, amount = 1, value, image} = req.body;
 		Cart.findOne({userId, name}, (error, result) => {
 			if (error) {
 				res.status(444);
@@ -11,14 +11,14 @@ const cart = {
 				return;
 			}
 			if (!result) {
-				const cart = new Cart({userId, name, value, image, amount: 1});
+				const cart = new Cart({userId, name, value, image, amount});
 				cart.save().then((result) => {
 					res.json({message: 'Add to cart success', result});
 				}).catch((error) => {
 					throw new Error(error);
 				});
 			} else {
-				result.amount++;
+				result.amount += amount;
 				result.overwrite(result);
 				result.save().then((result) => {
 					res.json({message: 'Add to cart success', result});
