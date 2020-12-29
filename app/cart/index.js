@@ -4,6 +4,11 @@ const Cart = mongoose.model('Cart');
 const cart = {
 	addToCart: (req, res) => {
 		const {userId, name, amount = 1, value, image} = req.body;
+		if (!userId || !name || !value || !image) {
+			res.status(444);
+			res.json({error: 'Invalid body ' + req.body});
+			return;
+		}
 		Cart.findOne({userId, name}, (error, result) => {
 			if (error) {
 				res.status(444);
